@@ -12,7 +12,10 @@ import javax.jms.MessageListener;
 @MessageDriven(name = "SimpleMdbToDb",
         activationConfig = {
                 @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
-                @ActivationConfigProperty(propertyName = "destination", propertyValue = "jms/topic/demoTopic")
+                @ActivationConfigProperty(propertyName = "destination", propertyValue = "demoTopic"),
+                @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "mySubscription"),
+                @ActivationConfigProperty(propertyName = "clientID", propertyValue = "myClientId"),
+                @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),
         })
 public class TrainMDB implements MessageListener {
 
