@@ -4,6 +4,8 @@ import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.jms.JMSException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,8 +22,9 @@ import java.util.Map;
 public class TrainApplication extends Application {
 
     @Path("/")
-    public static class TrainResource {
-        private static final Logger log = Logger.getLogger(TrainResource.class.getName());
+//    @ServletSecurity(@HttpConstraint(rolesAllowed = { "JBossPain" }))
+    public static class SecuredTrainResource {
+        private static final Logger log = Logger.getLogger(SecuredTrainResource.class.getName());
 
         @Inject
         TrainService trainService;
@@ -33,6 +36,14 @@ public class TrainApplication extends Application {
             log.info("processing HTTP POST request");
             trainService.log(data);
         }
+    }
+
+    @Path("/")
+    public static class TrainResource {
+        private static final Logger log = Logger.getLogger(TrainResource.class.getName());
+
+        @Inject
+        TrainService trainService;
 
         @GET
         @Path("/info")
@@ -42,4 +53,6 @@ public class TrainApplication extends Application {
             return trainService.getInfo();
         }
     }
+
+
 }

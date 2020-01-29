@@ -4,6 +4,9 @@
     version="3.1">
     <display-name>Liberty Project</display-name>
 
+    <!--<login-config><auth-method>BASIC</auth-method><realm-name>Test realm</realm-name></login-config>-->
+
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

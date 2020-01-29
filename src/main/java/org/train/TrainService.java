@@ -72,6 +72,10 @@ public class TrainService {
     Map<String, String> getInfo() {
         Map<String, String> map = new HashMap<>();
         log.info("getting info");
+
+//        map.put("train_count", "2");
+//        map.put("train_avg", "1.1");
+
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(demo_train_id) as demo_count, AVG(demo_data) FROM demo_table as demo_avg");
