@@ -9,11 +9,11 @@ import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-@MessageDriven(name = "SimpleMdbToDb",
-        activationConfig = {
-                @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
-                @ActivationConfigProperty(propertyName = "destination", propertyValue = "jms/topic/demoTopic")
-        })
+//@MessageDriven(name = "SimpleMdbToDb",
+//        activationConfig = {
+//                @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
+//                @ActivationConfigProperty(propertyName = "destination", propertyValue = "jms/topic/demoTopic")
+//        })
 public class TrainMDB implements MessageListener {
 
     private static final Logger log = Logger.getLogger(TrainMDB.class.getName());

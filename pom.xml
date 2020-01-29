@@ -19,7 +19,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.train</groupId>
-    <artifactId>helloworld-rs</artifactId>
+    <artifactId>train-app</artifactId>
     <version>1.0</version>
     <build>
         <plugins>
@@ -34,8 +34,6 @@
         </plugins>
     </build>
     <packaging>war</packaging>
-    <name>Quickstart: helloworld-rs</name>
-    <description>A simple Hello World project that uses JAX-RS</description>
 
 
     <dependencies>

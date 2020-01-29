@@ -24,6 +24,7 @@ public class TrainService {
     public static final String TRAIN_ID_PROPERTY_NAME = "trainID";
     public static final String DATA_PROPERTY_NAME = "data";
     private static final Logger log = Logger.getLogger(TrainService.class.getName());
+
     @Inject
     JMSContext jmsContext;
     @Resource(lookup = "java:/topic/demoTopic")
@@ -35,18 +36,21 @@ public class TrainService {
         this.dataSource = dataSource;
     }
 
-    void log(String trainID, int timestamp, int data) throws JMSException {
+    void log(TrainData trainData) throws JMSException {
         log.info("sending message to AMQ...");
+        log.info("train id: " + trainData.getTrainID());
+        log.info("timestamp: " + trainData.getTimestamp());
+        log.info("data: " + trainData.getData());
         Message message = jmsContext.createMessage();
-        message.setStringProperty(TRAIN_ID_PROPERTY_NAME, trainID);
-        message.setIntProperty(TIMESTAMP_PROPERTY_NAME, timestamp);
-        message.setIntProperty(DATA_PROPERTY_NAME, data);
+        message.setStringProperty(TRAIN_ID_PROPERTY_NAME, trainData.getTrainID());
+        message.setIntProperty(TIMESTAMP_PROPERTY_NAME, trainData.getTimestamp());
+        message.setIntProperty(DATA_PROPERTY_NAME, trainData.getData());
         jmsContext.createProducer().send(topic, message);
     }
 
     void processMessage(Message message) {
+        log.info("saving data");
         try (Connection connection = dataSource.getConnection()) {
-            log.info("saving data");
 
             String trainID = message.getStringProperty(TrainService.TRAIN_ID_PROPERTY_NAME);
             int data = message.getIntProperty(TrainService.DATA_PROPERTY_NAME);
@@ -65,15 +69,16 @@ public class TrainService {
     }
 
 
-    Map<String, Integer> getInfo() {
-        Map<String, Integer> map = new HashMap<>();
+    Map<String, String> getInfo() {
+        Map<String, String> map = new HashMap<>();
+        log.info("getting info");
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(demo_train_id) as demo_count, AVG(demo_data) FROM demo_table as demo_avg");
             ResultSet resultSet = ps.executeQuery();
 
-            map.put("train_count", resultSet.getInt("demo_count"));
-            map.put("average_data:", resultSet.getInt("demo_avg"));
+            map.put("train_count", String.valueOf(resultSet.getInt("demo_count")));
+            map.put("average_data:", String.valueOf(resultSet.getDouble("demo_avg")));
 
             ps.close();
 
