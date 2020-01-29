@@ -27,7 +27,7 @@ public class TrainService {
 
     @Inject
     JMSContext jmsContext;
-    @Resource(lookup = "java:/topic/demoTopic")
+    @Resource(lookup = "java:/demoTopic")
     private Topic topic;
     private DataSource dataSource;
 
